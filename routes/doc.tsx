@@ -157,6 +157,7 @@ async function getEntries<R extends string>(
   url: string,
 ): Promise<DocNode[]> {
   let entries = cachedEntries.get(url);
+  console.log("has entries", cachedEntries.has(url));
   if (!entries) {
     try {
       const start = Date.now();
@@ -222,9 +223,11 @@ async function maybeCacheStatic(url: string, host: string) {
         ),
       );
       if (res.status === 200) {
+        console.log("setting entries for", url);
         cachedEntries.set(url, mergeEntries(await res.json()));
       }
-    } catch {
+    } catch (e) {
+      console.log(e);
       // just swallowing here
     }
   }
