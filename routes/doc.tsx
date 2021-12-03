@@ -238,6 +238,7 @@ export const pathGetHead = async <R extends string>(ctx: RouterContext<R>) => {
   }
   ctx.assert(proto && host, Status.BadRequest, "Malformed documentation URL");
   const url = `${proto}/${host}/${path ?? ""}${search}`;
+  console.log({ proto, host, item, path, url });
   await maybeCacheStatic(url, host);
   return process(ctx, url, proto === "deno", item);
 };
